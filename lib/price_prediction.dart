@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:lottie/lottie.dart';
 class HomePricePredictor extends StatefulWidget {
   @override
   _HomePricePredictorState createState() => _HomePricePredictorState();
@@ -61,58 +61,83 @@ class _HomePricePredictorState extends State<HomePricePredictor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Price Predictor'),
+        foregroundColor: Colors.cyan,
+
+
+        title: Text('Bengaluru Home Price Predictor',style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Dropdown for location
-            DropdownButton<String>(
-              isExpanded: true,
-              value: _selectedLocation,
-              hint: Text('Select Location'),
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedLocation = newValue;
-                });
-              },
-              items: _locations.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-            TextField(
-              controller: _sqftController,
-              decoration: InputDecoration(labelText: 'Total Sqft'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: _bhkController,
-              decoration: InputDecoration(labelText: 'BHK'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: _bathController,
-              decoration: InputDecoration(labelText: 'Bath'),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _predictPrice,
-              child: Text('Predict Price'),
-            ),
-            SizedBox(height: 20),
-            _predictionPrice != null
-                ? Text(
-              'Predicted Price : ₹$_predictionPrice''Lakh',
-              style: TextStyle(fontSize: 20),
-            )
-                : Container(),
-          ],
+      body: Scaffold(
+
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 10, 10),
+          child: Column(
+            children: [
+              Container(child: Lottie.network('https://lottie.host/100ed979-a8f0-4b9b-897a-69f852d2380d/HvaCXxpphQ.json'),height: 230,width: 400,),
+              // Dropdown for location
+              DropdownButton<String>(
+
+                elevation: 50,
+                isExpanded: true,
+                value: _selectedLocation,
+                hint: Text('Select Location',style: TextStyle(fontSize: 20),),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedLocation = newValue;
+                  });
+                },
+                items: _locations.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    alignment: Alignment.center,
+                    value: value,
+                    child: Text(value,style: TextStyle(fontSize: 20),),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 20,),
+              TextField(
+
+                controller: _sqftController,
+                decoration: InputDecoration(labelText: 'Total Sqft',border: OutlineInputBorder()),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 20,),
+              TextField(
+                controller: _bhkController,
+                decoration: InputDecoration(labelText: 'BHK',border: OutlineInputBorder()),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 20,),
+              TextField(
+                controller: _bathController,
+                decoration: InputDecoration(labelText: 'Bath',border: OutlineInputBorder()),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _predictPrice,
+                child: Text('Predict Price'),
+              ),
+              SizedBox(height: 20),
+              _predictionPrice != null
+                  ? Text(
+                'Predicted Price : ₹$_predictionPrice'' Lakh',
+
+                style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold ),
+              )
+                  : Container(),
+            ],
+          ),
         ),
+       bottomNavigationBar: BottomNavigationBar( items: const <BottomNavigationBarItem>[
+         BottomNavigationBarItem(
+           icon: Icon(Icons.home_filled),
+           label: 'Home',
+         ),
+         BottomNavigationBarItem(
+           icon: Icon(Icons.settings),
+           label: 'Setting',
+         ),
+       ],),
       ),
     );
   }
